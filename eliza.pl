@@ -10,16 +10,9 @@ eliza :-
 
 eliza_loop :-
     write(' > '),
-    read_atomics(Words),
-    (  ( Words == [quit] ; Words = [quit, '.'])
-    -> true
-    ; (  Words = [] 
-      -> fail
-      ;  respond(Words), 
-         fail
-      )
-    ),
-    !.
+    read_atomics(Input),
+    write(Input), nl,
+    respond(Input).
 
 respond([my,name,is,Name | _ ]) :-
     write('Eliza > '),
@@ -36,7 +29,10 @@ respond(Input) :-
     write('Eliza > '),
     write('You just mentioned your '), write(Animal), write('. Tell me more about your '), write(Animal), nl,
     eliza_loop.
-
+respond(Input) :-
+    member(Exit, Input),
+    member(Exit, [ quit, exit, leave ]),
+    write('Eliza > Goodbye'), nl.
 respond([ _ ]) :-
     retract(list_of_excuses([ Next | Rest ])),
     append(Rest,[ Next ],NewExcuseList),
