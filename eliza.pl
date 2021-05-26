@@ -40,3 +40,10 @@ respond([ _ ]) :-
     write('Eliza > '),
     write(Next),nl,
     eliza_loop.
+
+respond(Input) :-
+    member(Food, Input),
+    member(Food,[hamburguer, pizza, sweet, hot-dog, hotdog, fried chicken, sope]),
+    write('Eliza > '),
+    write('You just said '), write(Food), write('? I have never eaten '), write(Food), write('. Is it tasty?')
+    eliza_loop
